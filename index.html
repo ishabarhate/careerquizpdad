@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Career Catalyst</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+      }
+      #quiz-container {
+        padding: 20px;
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #1e1e1e;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+      .question {
+        margin-bottom: 20px;
+      }
+      .question p {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #00fffb;
+      }
+      .options label {
+        display: block;
+        margin-bottom: 10px;
+        color: #f4f4f4d4;
+      }
+      #results-container {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #2e2e2e;
+        border-radius: 8px;
+      }
+      #display-future {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #2e2e2e;
+        border-radius: 8px;
+        color: #a2e7ba;
+      }
+      button {
+        background-color: #bb86fc;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #3700b3;
+      }
+      .options input[type="radio"] {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="quiz-container">
+      <!-- Questions and options will be inserted here dynamically -->
+    </div>
+
+    <div id="results-container">
+      <!-- Results will be displayed here -->
+    </div>
+    <div id="display-future"></div>
+    <script>
+      const userAnswers = {};
+
+      function handleRadioClick(questionIndex, option) {
+        userAnswers[questionIndex] = option;
+      }
+
+      const correctAnswers = [
+        "A", "C", "B", "A", "A", "B", "B", "B", "A", "A",
+        "B", "C", "B", "B", "B", "C", "A", "A", "B", "B",
+        "B", "C", "B", "C", "B", "A", "A", "C", "B", "C",
+        "C", "C", "B", "B", "C", "C", "B", "B", "C", "C"
+      ];
+
+      function calculateScore() {
+        let Tscore = 0;
+        for (let i = 0; i < 10; i++) {
+          if (userAnswers[i] === correctAnswers[i]) {
+            Tscore++;
+          }
+        }
+        return Tscore;
+      }
+
+      function calculateScore1() {
+        let Escore = 0;
+        for (let i = 10; i < 20; i++) {
+          if (userAnswers[i] === correctAnswers[i]) {
+            Escore++;
+          }
+        }
+        return Escore;
+      }
+
+      function calculateScore2() {
+        let Rscore = 0;
+        for (let i = 20; i < 30; i++) {
+          if (userAnswers[i] === correctAnswers[i]) {
+            Rscore++;
+          }
+        }
+        return Rscore;
+      }
+
+      function calculateScore3() {
+        let Nscore = 0;
+        for (let i = 30; i < 40; i++) {
+          if (userAnswers[i] === correctAnswers[i]) {
+            Nscore++;
+          }
+        }
+        return Nscore;
+      }
+
+      function DisplayFuture(score1, score2, score3, score4) {
+        let display = "";
+        if (score1 > score2 && score1 > score3 && score1 > score4) {
+          display = "<h1>You may have a bright future in Telecom Engineering</h1>";
+        } else if (score2 > score1 && score2 > score3 && score2 > score4) {
+          display = "<h1>You may have a bright future in Embedded Engineering</h1>";
+        } else if (score3 > score1 && score3 > score2 && score3 > score4) {
+          display = "<h1>You may have a bright future in Robotics Engineering</h1>";
+        } else if (score4 > score1 && score4 > score2 && score4 > score3) {
+          display = "<h1>You may have a bright future in Network Engineering</h1>";
+        }
+        document.getElementById("display-future").innerHTML = display;
+      }
+
+      function displayResults(Tscore, Escore, Rscore, Nscore) {
+        const resultHTML = `
+          <h2>Results</h2>
+          <p>You scored ${Tscore} in TELECOM ENGINEER.</p><br/>
+          <p>You scored ${Escore} in EMBEDDED ENGINEER.</p><br/>
+          <p>You scored ${Rscore} in ROBOTIC ENGINEER.</p><br/>
+          <p>You scored ${Nscore} in NETWORK ENGINEER.</p>
+        `;
+        document.getElementById("results-container").innerHTML = resultHTML;
+      }
+
+      function startQuiz() {
+        const questions = [
+          // Telecom
+          "What does LTE stand for in the context of telecommunications?",
+          ["A. Long-Term Evolution", "B. Light Transfer Efficiency", "C. Local Telephone Exchange", "D. Logical Transmission Environment"],
+          "Which of the following is not a commonly used frequency band in mobile telecommunications?",
+          ["A. 2Ghz", "B. 5Ghz", "C. 10Ghz", "D. 20Ghz"],
+          "What is the primary purpose of a Base Transceiver Station (BTS) in a cellular network?",
+          ["A. To process billing information", "B. To provide connectivity between mobile devices and the core network", "C. To store user data", "D. To manage network security"],
+          "In telecommunications, what does the acronym VoIP stand for?",
+          ["A. Voice over Internet Protocol", "B. Virtual Operator Interface Protocol", "C. Virtual Operator Interface Protocol", "D. Virtual Operator Interconnection Protocol"],
+          "Which technology is used to enhance the coverage and capacity of cellular networks indoors?",
+          ["A. MIMO (Multiple Input Multiple Output)", "B. GPS (Global Positioning System)", "C. NFC (Near Field Communication)", "D. VPN (Virtual Private Network)"],
+          "What is the purpose of a Network Operations Center (NOC) in a telecom environment?",
+          ["A. To manage customer complaints", "B. To monitor and control network elements", "C. To develop new telecommunication technologies", "D. To conduct Market Research"],
+          "Which protocol is commonly used for signaling and control in traditional telephony networks?",
+          ["A. TCP/IP", "B. SIP (Session Initiation Protocol)", "C. HTTP (Hypertext Transfer Protocol)", "D. SNMP (Simple Network Management Protocol)"],
+          "What is the function of a Subscriber Identity Module (SIM) card in a mobile device?",
+          ["A. To store contact information", "B. To authenticate the subscriber to the network", "C. To connect to Bluetooth devices", "D. To process payment transactions"],
+          "What does FTTH refer to in the context of broadband networks?",
+          ["A. Fiber-to-the-Home", "B. Fast Transient Transfer Hub", "C. Fixed Telephony Throughput", "D. Flexible Telecom Technology Hub"],
+          "Which technology is used for wireless communication over short distances between devices like smartphones, laptops, and smartwatches?",
+          ["A. Bluetooth", "B. WiMAX", "C. DSL", "D. Ethernet"],
+          // Embedded Engineering
+          "What is the primary function of an embedded system?",
+          ["A. Run complex Algorithms", "B. Perform specific tasks within a larger system", "C. Connect to the internet", "D. Provide user interfaces"],
+          "Which of the following is NOT a characteristic of embedded systems?",
+          ["A. Limited resources", "B. Real-time operation", "C. High-speed processing", "D. Fixed functionality"],
+          "Which programming languages are commonly used in embedded systems development?",
+          ["A. Java and Python", "B. C and assembly", "C. Ruby and JavaScript", "D. PHP and Swift"],
+          "What is the purpose of a microcontroller in an embedded system?",
+          ["A. Store large amounts of data", "B. Execute instructions and control peripherals", "C. Connect to external networks", "D. Display graphical user interfaces"],
+          "What is firmware in the context of embedded systems?",
+          ["A. Hardware components", "B. Software that controls hardware", "C. Networking protocols", "D. User interfaces"],
+          "Which of the following is an example of a real-time embedded system?",
+          ["A. Smartphone", "B. Digital camera", "C. Industrial control system", "D. Laptop computer"],
+          "What does the term RTOS stand for in embedded systems?",
+          ["A. Real-Time Operating System", "B. Random Task Organization System", "C. Real-Time Optimization System", "D. Robotic Task Observation System"],
+          "Which of the following is a common communication protocol used in embedded systems?",
+          ["A. Bluetooth", "B. HTTP", "C. FTP", "D. HTML"],
+          "What is the purpose of an interrupt in embedded systems?",
+          ["A. To slow down processing", "B. To handle external events promptly", "C. To increase power consumption", "D. To display error messages"],
+          "Which stage of embedded system development involves writing code to control hardware?",
+          ["A. Design", "B. Development", "C. Testing", "D. Deployment"],
+          // Robotics Engineering
+          "What is the primary purpose of robotics in industrial automation?",
+          ["A. Enhancing human creativity", "B. Reducing human labor", "C. Providing entertainment", "D. Increasing environmental pollution"],
+          "Which programming languages are commonly used for programming robotic systems?",
+          ["A. HTML and CSS", "B. Python and Java", "C. C++ and MATLAB", "D. PHP and Ruby"],
+          "What is the function of sensors in robotic systems?",
+          ["A. Control Actuators", "B. Collect environmental data", "C. Generate power", "D. None of the above"],
+          "Which type of robot is designed to mimic human-like movements and interactions?",
+          ["A. Industrial robot", "B. Mobile robot", "C. Humanoid robot", "D. Collaborative robot"],
+          "What is the purpose of machine vision in robotics?",
+          ["A. Enhancing robot aesthetics", "B. Enabling robots to see and interpret the environment", "C. Controlling robot speed", "D. Improving robot communication"],
+          "What does the term ROS stand for in robotics?",
+          ["A. Robotic Operating System", "B. Digital camera", "C. Industrial control system", "D. Laptop computer"],
+          "Which component of a robotic system is responsible for controlling motor movements?",
+          ["A. Actuator", "B. Sensor", "C. Microcontroller", "D. Battery"],
+          "What is the advantage of using collaborative robots (cobots) in manufacturing environments?",
+          ["A. Lower cost", "B. Higher speed", "C. Increased safety for human-robot interaction", "D. Longer Lifespan"],
+          "What is the role of artificial intelligence (AI) in advanced robotics?",
+          ["A. Controlling robot movements", "B. Enabling robots to learn and make decisions", "C. Powering robot sensors", "D. Providing robot energy"],
+          "What is the function of a gripper in a robotic arm?",
+          ["A. Generate power", "B. Collect data", "C. Manipulate objects", "D. Provide wireless communication"],
+          // Network Engineering
+          "What is the primary responsibility of a network engineer?",
+          ["A. Designing user interfaces", "B. Developing mobile applications", "C. Managing and maintaining computer networks", "D. Creating graphic designs"],
+          "Which device is used to connect multiple computers within a local area network (LAN)?",
+          ["A. Router", "B. Modem", "C. Switch", "D. Firewall"],
+          "Which network topology connects each device to a central hub or switch?",
+          ["A. Bus", "B. Star", "C. Ring", "D. Mesh"],
+          "What is the purpose of a firewall in network security?",
+          ["A. Connect different networks", "B. Filter incoming and outgoing network traffic", "C. Monitor network speed", "D. Configure IP addresses"],
+          "Which protocol is commonly used for secure communication over a network?",
+          ["A. FTP", "B. HTTP", "C. SSH", "D. SMTP"],
+          "What is the function of a router in a computer network?",
+          ["A. Connects devices within the same network", "B. Filters network traffic", "C. Routes data between different networks", "D. Encrypts data packets"],
+          "Which network addressing scheme is used in IPv4?",
+          ["A. 16-bit addresses", "B. 32-bit addresses", "C. 64-bit addresses", "D. 128-bit addresses"],
+          "What is the purpose of Quality of Service (QoS) in networking?",
+          ["A. Manage network security", "B. Prioritize network traffic", "C. Block unauthorized access", "D. Monitor network performance"],
+          "Which protocol is used for sending and receiving emails over a network?",
+          ["A. HTTP", "B. FTP", "C. SMTP", "D. TCP"],
+          "What does the term LAN stand for in networking?",
+          ["A. Local Access Network", "B. Large Area Network", "C. Local Area Network", "D. Long Access Network"]
+        ];
+
+        const quizContainer = document.getElementById("quiz-container");
+
+        for (let i = 0; i < questions.length; i += 2) {
+          const questionDiv = document.createElement("div");
+          questionDiv.classList.add("question");
+          const questionText = document.createElement("p");
+          questionText.textContent = questions[i];
+          questionDiv.appendChild(questionText);
+          quizContainer.appendChild(questionDiv);
+
+          const optionsDiv = document.createElement("div");
+          optionsDiv.classList.add("options");
+          for (let j = 0; j < questions[i + 1].length; j++) {
+            const label = document.createElement("label");
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = `question-${i / 2}`;
+            radio.value = String.fromCharCode(65 + j);
+            radio.addEventListener("click", () => {
+              handleRadioClick(i / 2, radio.value);
+            });
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(questions[i + 1][j]));
+            optionsDiv.appendChild(label);
+          }
+          quizContainer.appendChild(optionsDiv);
+        }
+
+        const submitButton = document.createElement("button");
+        submitButton.textContent = "Submit";
+        submitButton.addEventListener("click", () => {
+          const Tscore = calculateScore();
+          const Escore = calculateScore1();
+          const Rscore = calculateScore2();
+          const Nscore = calculateScore3();
+          displayResults(Tscore, Escore, Rscore, Nscore);
+          DisplayFuture(Tscore, Escore, Rscore, Nscore);
+        });
+        quizContainer.appendChild(submitButton);
+      }
+
+      window.onload = startQuiz;
+    </script>
+  </body>
+</html>
+
